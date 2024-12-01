@@ -20,7 +20,7 @@
       <div class="d-flex justify-space-between mb-2">
         <div class="checkbox-wrapper-11 justify-space-between align-center">
           <input
-            id="checkbox-1"
+            :id="'checkbox-' + task.id"
             type="checkbox"
             class="checkbox"
             :class="{ checked: task.completed }"
@@ -28,7 +28,7 @@
             @change="updateTaskStatus(task)"
           />
           <label
-            for="checkbox-1"
+            :for="'checkbox-' + task.id"
             class="text-primary font-weight-bold"
             :class="{
               'line-through': task.completed,
