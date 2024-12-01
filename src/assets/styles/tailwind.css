@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/peyda/woff/peydaWeb-light.woff") format("woff");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/peyda/woff/PeydaWeb-Regular.woff") format("woff");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Peyda";
+  src: url("../fonts/peyda/woff/PeydaWeb-Bold.woff") format("woff");
+  font-weight: 700;
+}
+
+* {
+  font-family: "Peyda";
+}

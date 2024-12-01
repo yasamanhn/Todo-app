@@ -1,10 +1,15 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import "./assets/styles/tailwind.css";
+import vuetify from "./plugins/vuetify";
+import "@mdi/font/css/materialdesignicons.css";
+import { createPinia } from "pinia";
 
-// Vuetify
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
+const app = createApp(App);
+const pinia = createPinia();
 
-const vuetify = createVuetify();
+app.use(pinia);
 
-createApp(App).use(vuetify).mount("#app");
+app.use(vuetify);
+app.use(createPinia());
+app.mount("#app");
