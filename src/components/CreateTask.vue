@@ -1,7 +1,7 @@
 <template>
   <v-btn
     color="secondary"
-    class="create-button text-primary font-weight-bold w-100 mt-md-3 w-xs-33 w-sm-33 w-md-25"
+    class="create-button text-primary font-weight-bold mt-md-3 w-xs-33 w-sm-33 w-md-25"
     @click="dialog = true"
   >
     <v-icon class="mr-2" color="primary " left>mdi-plus</v-icon>
@@ -11,22 +11,21 @@
   <!-- Modal Dialog -->
   <v-dialog v-model="dialog" max-width="500px">
     <v-card class="rounded-lg">
-      <v-card-text class="rounded-lg">
-        <BaseInput
+      <v-card-text class="rounded-lg pa-6">
+        <v-text-field
           label="Task Title"
-          type="text"
           variant="solo"
           v-model="taskTitle"
           class="mt-5 custom-input"
-        />
-        <BaseInput
+        ></v-text-field>
+
+        <v-text-field
+          label="Task Description"
+          variant="solo"
           v-model="taskDescription"
           class="custom-input"
-          type="text"
-          variant="solo"
-          label="Task Description"
-          placeholder="Enter a detailed description..."
-        />
+        ></v-text-field>
+
         <custom-date-picker
           v-model="parentDate"
           @dateChanged="handleDateChange"
@@ -57,13 +56,14 @@ import { useTaskStore } from "../stores/taskStore";
 import BaseInput from "./BaseInput.vue";
 import CustomDatePicker from "./CustomDatePicker.vue";
 
-const taskStore = useTaskStore();
+const taskStore = useTaskStore(); // Initialize task store
 
 const dialog = ref(false);
 const taskTitle = ref("");
 const taskDescription = ref("");
 const parentDate = ref("");
 
+// Add new task method
 const addTask = async () => {
   if (!taskTitle.value.trim() || !taskDescription.value.trim()) {
     alert("Please fill in all fields.");
@@ -71,7 +71,7 @@ const addTask = async () => {
   }
 
   const newTask = {
-    id: Date.now(),
+    id: Date.now(), // Unique ID for the task (could be replaced with API-generated ID)
     title: taskTitle.value,
     description: taskDescription.value,
     date: parentDate.value || "",
@@ -79,11 +79,11 @@ const addTask = async () => {
   };
 
   try {
-    taskStore.addTask(newTask);
-    taskTitle.value = "";
+    taskStore.addTask(newTask); // Add task to the store
+    taskTitle.value = ""; // Clear inputs after task creation
     taskDescription.value = "";
     parentDate.value = "";
-    dialog.value = false;
+    dialog.value = false; // Close the dialog box
   } catch (error) {
     console.error("Error adding task:", error);
   }
@@ -95,9 +95,17 @@ const handleDateChange = (newDate) => {
 };
 </script>
 
-<style>
+<style scoped>
 .custom-input .v-input__control input {
   color: rgb(87, 85, 85) !important;
+}
+::v-deep(.v-field--variant-solo) {
+  border-radius: 14px;
+  background: #e2cfea3d !important;
+  color: #5e548e;
+}
+::v-deep(.v-text-field) {
+  font-size: 16px !important;
 }
 .create-button {
   text-transform: capitalize;

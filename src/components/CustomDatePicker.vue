@@ -59,11 +59,8 @@ watch(selectedDate, (newValue) => {
   width: 100%;
 }
 .vpd-input-group {
-  max-width: 432px;
   gap: 10px;
   align-items: center;
-  padding-left: 15px;
-  padding-right: 15px;
 }
 .vpd-input-group,
 .form-control {

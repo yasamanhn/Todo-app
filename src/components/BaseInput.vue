@@ -2,15 +2,8 @@
   <v-text-field
     :label="label"
     :value="modelValue"
-    :outlined="outlined"
-    :dense="dense"
-    :color="color"
     :type="type"
     :placeholder="placeholder"
-    :class="{ 'focused-input': isFocused }"
-    @focus="onFocus"
-    @blur="onBlur"
-    @input="onInput"
   >
     <template v-slot:append>
       <slot name="append"></slot>
@@ -21,57 +14,31 @@
   </v-text-field>
 </template>
 
-<script>
-export default {
-  name: "BaseInput",
-  props: {
-    modelValue: {
-      type: [String, Number],
-      default: "",
-    },
-    label: {
-      type: String,
-      default: "Input",
-    },
-    type: {
-      type: String,
-      default: "text",
-    },
-    color: {
-      type: String,
-      default: "customColor-100",
-    },
-    outlined: {
-      type: Boolean,
-      default: true,
-    },
-    dense: {
-      type: Boolean,
-      default: false,
-    },
-    placeholder: {
-      type: String,
-      default: "",
-    },
-  },
-  data() {
-    return {
-      isFocused: false,
-    };
-  },
+<script setup>
+import { ref, defineProps, defineEmits } from "vue";
 
-  methods: {
-    onFocus() {
-      this.isFocused = true;
-    },
-    onBlur() {
-      this.isFocused = false;
-    },
-    onInput(event) {
-      this.$emit("update:modelValue", event.target.value);
-    },
+// Define props
+const props = defineProps({
+  modelValue: {
+    type: [String, Number],
+    default: "",
   },
-};
+  label: {
+    type: String,
+    default: "Input",
+  },
+  type: {
+    type: String,
+    default: "text",
+  },
+  placeholder: {
+    type: String,
+    default: "",
+  },
+});
+
+// Define emits
+const emit = defineEmits();
 </script>
 
 <style scoped>

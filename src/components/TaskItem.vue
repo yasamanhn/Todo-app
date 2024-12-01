@@ -1,7 +1,7 @@
 <template>
   <!-- Filter Tasks -->
   <v-select
-    class="custom-select text-capitalize mt-10 mb-10 w-50 w-sm-25 w-lg-25 p-0 text-primary"
+    class="custom-select text-capitalize mt-10 mb-10 w-50 w-sm-33 w-lg-33 p-0 text-primary"
     clearable
     label="Filter"
     :items="['All', 'Active', 'Completed']"
@@ -86,21 +86,20 @@
   <v-dialog v-model="editDialog" max-width="500px">
     <v-card class="rounded-lg">
       <v-card-text class="rounded-lg">
-        <BaseInput
+        <v-text-field
           label="Task Title"
-          type="text"
           variant="solo"
           v-model="editTitle"
           class="mt-5 custom-input"
-        />
-        <BaseInput
+        ></v-text-field>
+
+        <v-text-field
+          label="Task Description"
+          variant="solo"
           v-model="editDescription"
           class="custom-input"
-          type="text"
-          variant="solo"
-          label="Task Description"
-          placeholder="Enter a detailed description..."
-        />
+        ></v-text-field>
+
         <custom-date-picker
           v-model="editDate"
           @dateChanged="handleDateChange"
@@ -137,7 +136,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits();
+const emit = defineEmits(["taskRemoved"]);
 
 // State for managing the filter status
 const filterStatus = ref("All");
@@ -295,12 +294,12 @@ const handleDateChange = (newDate) => {
 
 @media (min-width: 320px) {
   .task-list-container {
-    max-height: 450px !important;
+    max-height: 210px !important;
   }
 }
 @media (min-width: 959px) {
   .task-list-container {
-    max-height: 200px !important;
+    max-height: 250px !important;
   }
 }
 
