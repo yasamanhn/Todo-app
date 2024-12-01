@@ -285,10 +285,10 @@ const handleDateChange = (newDate) => {
 /* scroll style */
 .task-list-container {
   max-height: 300px;
-  padding-right: 12px;
+  padding-right: 8px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #cdafdaea #f5f3f4;
+  scrollbar-color: #848484ea #f5f3f4;
 }
 
 @media (min-width: 320px) {
@@ -309,7 +309,6 @@ const handleDateChange = (newDate) => {
 }
 /* سفارشی‌سازی برای Chrome, Edge و Safari */
 .task-list-container::-webkit-scrollbar {
-  width: 8px;
   cursor: pointer;
 }
 

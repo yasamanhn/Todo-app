@@ -99,6 +99,7 @@ const updateTasksAfterDeletion = (taskId) => {
 }
 .v-container {
   background-color: #f5f3f4;
+  height: 100%;
 }
 
 @media (min-width: 849px) {
@@ -112,7 +113,7 @@ const updateTasksAfterDeletion = (taskId) => {
 
 @media (min-width: 849px) {
   .v-container {
-    background-color: #ffffffd6;
+    background-color: #ffffffdd;
   }
 }
 
