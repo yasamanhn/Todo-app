@@ -125,7 +125,6 @@
 
 <script setup>
 import { ref, watch, computed, defineProps } from "vue";
-import BaseInput from "./BaseInput.vue";
 import CustomDatePicker from "./CustomDatePicker.vue";
 
 // Define props for receiving tasks
