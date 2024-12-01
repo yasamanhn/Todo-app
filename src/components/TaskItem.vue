@@ -293,7 +293,7 @@ const handleDateChange = (newDate) => {
 
 @media (min-width: 320px) {
   .task-list-container {
-    max-height: 600px !important;
+    max-height: 500px !important;
   }
 }
 @media (min-width: 959px) {
