@@ -15,7 +15,7 @@
     <div
       v-for="(task, index) in filteredTasks"
       :key="task.id"
-      class="task-item pa-2 items-center gap-4 justify-lg-space-between"
+      class="task-item pa-2 items-center justify-lg-space-between"
     >
       <div class="d-flex justify-space-between mb-2">
         <div class="checkbox-wrapper-11 justify-space-between align-center">
@@ -293,12 +293,17 @@ const handleDateChange = (newDate) => {
 
 @media (min-width: 320px) {
   .task-list-container {
-    max-height: 210px !important;
+    max-height: 600px !important;
   }
 }
 @media (min-width: 959px) {
   .task-list-container {
     max-height: 250px !important;
+  }
+}
+@media (min-width: 849px) {
+  .task-list-container {
+    max-height: 400px !important;
   }
 }
 
@@ -333,7 +338,7 @@ const handleDateChange = (newDate) => {
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 /* style for completed task */
 .line-through {

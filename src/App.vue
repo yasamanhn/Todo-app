@@ -106,14 +106,8 @@ const updateTasksAfterDeletion = (taskId) => {
   .v-container {
     margin: 3rem auto;
     max-width: 800px !important;
-    max-height: 600px !important;
+    max-height: 800px !important;
     border-radius: 16px !important;
-  }
-}
-
-@media (min-width: 849px) {
-  .v-container {
-    background-color: #ffffffdd;
   }
 }
 
