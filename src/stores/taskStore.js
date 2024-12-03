@@ -6,16 +6,23 @@ import {
   updateTask,
 } from "../services/taskService";
 
+import { useToast } from "vue-toastification";
+
 export const useTaskStore = defineStore("tasks", {
   state: () => ({
     tasks: [],
   }),
   actions: {
+    toast: useToast(),
+
     async fetchTasks() {
       try {
         this.tasks = await fetchTasks();
       } catch (error) {
-        console.error("Error fetching tasks:", error);
+        this.toast.error(
+          "خطا در دریافت تسک‌ها: " +
+            (error.response?.data?.message || error.message)
+        );
       }
     },
 
@@ -24,7 +31,10 @@ export const useTaskStore = defineStore("tasks", {
         const newTask = await addTask(task);
         this.tasks.push(newTask);
       } catch (error) {
-        console.error("Error adding task:", error);
+        this.toast.error(
+          "خطا در اضافه کردن تسک: " +
+            (error.response?.data?.message || error.message)
+        );
       }
     },
 
@@ -33,7 +43,9 @@ export const useTaskStore = defineStore("tasks", {
         await removeTask(taskId);
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
       } catch (error) {
-        console.error("Error deleting task:", error);
+        this.toast.error(
+          "خطا در حذف تسک: " + (error.response?.data?.message || error.message)
+        );
       }
     },
 
@@ -45,7 +57,10 @@ export const useTaskStore = defineStore("tasks", {
           this.tasks[taskIndex] = updatedTaskData;
         }
       } catch (error) {
-        console.error("Error updating task:", error);
+        this.toast.error(
+          "خطا در به‌روزرسانی تسک: " +
+            (error.response?.data?.message || error.message)
+        );
       }
     },
 
@@ -57,7 +72,10 @@ export const useTaskStore = defineStore("tasks", {
           this.tasks[taskIndex] = updatedTask;
         }
       } catch (error) {
-        console.error("Error updating task status:", error);
+        this.toast.error(
+          "خطا در به‌روزرسانی وضعیت تسک: " +
+            (error.response?.data?.message || error.message)
+        );
       }
     },
   },

@@ -49,7 +49,7 @@
             <!-- Dropdown Menu -->
             <div v-if="dropdownVisible === index" class="dropdown-menu">
               <p
-                class="dropdown-item cursor-pointer font-weight-bold"
+                class="dropdown-item cursor-none font-weight-bold"
                 :class="{
                   'text-gray': task.completed,
                   'text-danger': !task.completed,
