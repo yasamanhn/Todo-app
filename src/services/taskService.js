@@ -1,9 +1,10 @@
-import axios from "axios";
-import { API_ENDPOINTS } from "./apiEndpoints";
+import axiosInstance from "../plugins/axiosInstance";
+
+import { TODO_ENDPOINT } from "./apiEndpoints";
 
 export const fetchTasks = async () => {
   try {
-    const response = await axios.get(API_ENDPOINTS.TASKS);
+    const response = await axiosInstance.get(TODO_ENDPOINT);
     return response.data;
   } catch (error) {
     throw error;
@@ -12,7 +13,7 @@ export const fetchTasks = async () => {
 
 export const addTask = async (task) => {
   try {
-    const response = await axios.post(API_ENDPOINTS.TASKS, task);
+    const response = await axiosInstance.post(TODO_ENDPOINT, task);
     return response.data;
   } catch (error) {
     throw error;
@@ -21,7 +22,7 @@ export const addTask = async (task) => {
 
 export const removeTask = async (taskId) => {
   try {
-    await axios.delete(API_ENDPOINTS.TASK_BY_ID(taskId));
+    await axiosInstance.delete(`${TODO_ENDPOINT}/${taskId}`);
   } catch (error) {
     throw error;
   }
@@ -29,8 +30,8 @@ export const removeTask = async (taskId) => {
 
 export const updateTask = async (taskId, updatedTask) => {
   try {
-    const response = await axios.put(
-      API_ENDPOINTS.TASK_BY_ID(taskId),
+    const response = await axiosInstance.put(
+      `${TODO_ENDPOINT}/${taskId}`,
       updatedTask
     );
     return response.data;

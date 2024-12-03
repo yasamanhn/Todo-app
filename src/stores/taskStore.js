@@ -13,13 +13,12 @@ export const useTaskStore = defineStore("tasks", {
     tasks: [],
   }),
   actions: {
-    toast: useToast(),
-
     async fetchTasks() {
+      const toast = useToast();
       try {
         this.tasks = await fetchTasks();
       } catch (error) {
-        this.toast.error(
+        toast.error(
           "خطا در دریافت تسک‌ها: " +
             (error.response?.data?.message || error.message)
         );
@@ -27,11 +26,13 @@ export const useTaskStore = defineStore("tasks", {
     },
 
     async addTask(task) {
+      const toast = useToast();
       try {
         const newTask = await addTask(task);
         this.tasks.push(newTask);
+        toast.success("تسک جدید با موفقیت اضافه شد!");
       } catch (error) {
-        this.toast.error(
+        toast.error(
           "خطا در اضافه کردن تسک: " +
             (error.response?.data?.message || error.message)
         );
@@ -39,25 +40,29 @@ export const useTaskStore = defineStore("tasks", {
     },
 
     async removeTask(taskId) {
+      const toast = useToast();
       try {
         await removeTask(taskId);
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
+        toast.success("تسک با موفقیت حذف شد!");
       } catch (error) {
-        this.toast.error(
+        toast.error(
           "خطا در حذف تسک: " + (error.response?.data?.message || error.message)
         );
       }
     },
 
     async updateTask(taskId, updatedTask) {
+      const toast = useToast();
       try {
         const updatedTaskData = await updateTask(taskId, updatedTask);
         const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
         if (taskIndex !== -1) {
           this.tasks[taskIndex] = updatedTaskData;
         }
+        toast.success("تسک با موفقیت به‌روزرسانی شد!");
       } catch (error) {
-        this.toast.error(
+        toast.error(
           "خطا در به‌روزرسانی تسک: " +
             (error.response?.data?.message || error.message)
         );
@@ -65,18 +70,24 @@ export const useTaskStore = defineStore("tasks", {
     },
 
     async updateTaskStatus(task) {
+      const toast = useToast();
       try {
         const updatedTask = await updateTask(task.id, task);
         const taskIndex = this.tasks.findIndex((t) => t.id === task.id);
         if (taskIndex !== -1) {
           this.tasks[taskIndex] = updatedTask;
         }
+        toast.success("وضعیت تسک با موفقیت به‌روزرسانی شد!");
       } catch (error) {
-        this.toast.error(
+        toast.error(
           "خطا در به‌روزرسانی وضعیت تسک: " +
             (error.response?.data?.message || error.message)
         );
       }
+    },
+
+    updateTasksAfterDeletion(taskId) {
+      this.tasks = this.tasks.filter((task) => task.id !== taskId);
     },
   },
 });

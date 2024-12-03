@@ -27,12 +27,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from "vue";
+import "./assets/styles/globals.css";
+import { onMounted, defineProps, defineEmits } from "vue";
 import { useTaskStore } from "./stores/taskStore";
 
 import DayDisplay from "./components/DayDisplay.vue";
 import CreateTask from "./components/CreateTask.vue";
 import TaskItem from "./components/TaskItem.vue";
+
+import { useToast } from "vue-toastification";
 
 const props = defineProps({
   tasks: {
@@ -51,17 +54,22 @@ onMounted(() => {
 
 // Add a new task by sending data to the API
 const addTask = async (newTask) => {
+  const toast = useToast();
   try {
-    // استفاده از addTask از store
     await taskStore.addTask(newTask);
+    toast.success("تسک با موفقیت اضافه شد!");
   } catch (error) {
     console.error("Error adding task:", error);
+    toast.error(
+      "خطا در اضافه کردن تسک: " +
+        (error.response?.data?.message || error.message)
+    );
   }
 };
 
 // Method to update tasks after deletion
 const updateTasksAfterDeletion = (taskId) => {
-  taskStore.tasks = taskStore.tasks.filter((task) => task.id !== taskId); // حذف وظیفه از لیست
+  taskStore.updateTasksAfterDeletion(taskId);
 };
 </script>
 
