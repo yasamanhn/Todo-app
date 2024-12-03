@@ -96,3 +96,17 @@
 .custom-menu .v-list-item:hover {
   color: #5e548e !important;
 }
+
+.custom-toast {
+  background: linear-gradient(135deg, #e4d3ec, #9bc0dbdc) !important;
+  color: #5d5a5a !important;
+  border-radius: 10px !important;
+  padding: 10px !important;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+.Vue-Toastification__close-button {
+  color: #4a4949 !important;
+}

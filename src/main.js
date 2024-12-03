@@ -17,7 +17,9 @@ app.use(pinia);
 
 app.use(Toast, {
   position: POSITION.BOTTOM_RIGHT,
-  timeout: 2000,
+  timeout: 3000,
+  rtl: true,
+  toastClassName: "custom-toast",
 });
 
 app.use(vuetify);

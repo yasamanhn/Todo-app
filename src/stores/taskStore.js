@@ -44,7 +44,9 @@ export const useTaskStore = defineStore("tasks", {
       try {
         await removeTask(taskId);
         this.tasks = this.tasks.filter((task) => task.id !== taskId);
-        toast.success("تسک با موفقیت حذف شد!");
+        toast.success("تسک با موفقیت حذف شد!", {
+          style: { background: "red", color: "white" },
+        });
       } catch (error) {
         toast.error(
           "خطا در حذف تسک: " + (error.response?.data?.message || error.message)
