@@ -251,7 +251,7 @@ const handleDateChange = (newDate) => {
 };
 </script>
 
-<style>
+<style scoped>
 /* drop down */
 .dropdown-menu {
   position: absolute;
@@ -319,22 +319,6 @@ const handleDateChange = (newDate) => {
 /* سفارشی‌سازی برای Chrome, Edge و Safari */
 .task-list-container::-webkit-scrollbar {
   cursor: pointer;
-}
-
-.custom-input .v-input__control input {
-  color: rgb(87, 85, 85) !important;
-}
-/* Filter Style */
-.custom-menu .v-list {
-  background-color: #e7ddea !important;
-  transition: background-color 0.3s ease;
-}
-.custom-menu .v-list-item {
-  color: #003566 !important;
-  transition: color 0.3s ease, background-color 0.3s ease;
-}
-.custom-menu .v-list-item:hover {
-  color: #5e548e !important;
 }
 
 /* Task item */

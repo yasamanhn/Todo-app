@@ -115,5 +115,4 @@ const handleDateChange = (newDate) => {
   height: 40px;
   border: 2px solid #cdafdabe;
 }
-/* ******** */
 </style>

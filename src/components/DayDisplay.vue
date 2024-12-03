@@ -28,7 +28,7 @@ import { toJalaali } from "jalaali-js";
 import DayButton from "./DayButton.vue";
 const today = new Date();
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const currentDay = today.getDay(); 
+const currentDay = today.getDay();
 const selectedDay = ref(daysOfWeek[currentDay]);
 
 // تابع برای تبدیل تاریخ میلادی به شمسی و فرمت کردن
@@ -48,7 +48,7 @@ const formattedDate = computed(() => {
 });
 </script>
 
-<style>
+<style scoped>
 @media (max-width: 546px) {
   .day-button {
     display: none;

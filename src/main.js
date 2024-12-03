@@ -17,7 +17,7 @@ app.use(pinia);
 
 app.use(Toast, {
   position: POSITION.BOTTOM_RIGHT,
-  timeout: 3000,
+  timeout: 2000,
 });
 
 app.use(vuetify);
