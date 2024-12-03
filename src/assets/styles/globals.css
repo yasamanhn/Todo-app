@@ -98,8 +98,8 @@
 }
 
 .custom-toast {
-  background: linear-gradient(135deg, #e4d3ec, #9bc0dbdc) !important;
-  color: #5d5a5a !important;
+  background: #c4b4cc !important;
+  color: #3a3a3a !important;
   border-radius: 10px !important;
   padding: 10px !important;
   display: inline-flex;
@@ -108,5 +108,5 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 .Vue-Toastification__close-button {
-  color: #4a4949 !important;
+  color: #3a3a3a !important;
 }
