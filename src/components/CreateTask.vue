@@ -55,7 +55,7 @@ import { useTaskStore } from "../stores/taskStore";
 
 import CustomDatePicker from "./CustomDatePicker.vue";
 
-const taskStore = useTaskStore(); // Initialize task store
+const taskStore = useTaskStore();
 
 const dialog = ref(false);
 const taskTitle = ref("");
@@ -70,7 +70,6 @@ const addTask = async () => {
   }
 
   const newTask = {
-    id: Date.now(), // Unique ID for the task (could be replaced with API-generated ID)
     title: taskTitle.value,
     description: taskDescription.value,
     date: parentDate.value || "",
@@ -78,11 +77,11 @@ const addTask = async () => {
   };
 
   try {
-    taskStore.addTask(newTask); // Add task to the store
-    taskTitle.value = ""; // Clear inputs after task creation
+    await taskStore.addTask(newTask);
+    taskTitle.value = ""; 
     taskDescription.value = "";
     parentDate.value = "";
-    dialog.value = false; // Close the dialog box
+    dialog.value = false; 
   } catch (error) {
     console.error("Error adding task:", error);
   }

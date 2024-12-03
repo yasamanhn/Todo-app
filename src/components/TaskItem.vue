@@ -11,7 +11,7 @@
   ></v-select>
 
   <!-- Task list -->
-  <div v-if="tasks && tasks.length > 0" class="task-list-container">
+  <div v-if="filteredTasks.length > 0" class="task-list-container">
     <div
       v-for="(task, index) in filteredTasks"
       :key="task.id"
@@ -115,7 +115,7 @@
         <v-btn
           color="primary"
           class="text-capitalize font-weight-bold"
-          @click="saveEditTask"
+          @click="updateTask"
           >Save Edit</v-btn
         >
       </v-card-actions>
@@ -124,23 +124,14 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, defineProps } from "vue";
+import { ref, computed } from "vue";
+import { useTaskStore } from "../stores/taskStore"; // Import taskStore
 import CustomDatePicker from "./CustomDatePicker.vue";
 
-// Define props for receiving tasks
-const props = defineProps({
-  tasks: {
-    type: Array,
-    required: true,
-  },
-});
+// Access task store
+const taskStore = useTaskStore();
 
-const emit = defineEmits(["taskRemoved"]);
-
-// State for managing the filter status
 const filterStatus = ref("All");
-
-// State for managing dropdown visibility
 const dropdownVisible = ref(null);
 
 // Toggle dropdown visibility
@@ -151,29 +142,21 @@ const toggleDropdown = (index) => {
 // Computed property to filter tasks based on the filter status
 const filteredTasks = computed(() => {
   if (filterStatus.value === "All") {
-    return props.tasks;
+    return taskStore.tasks;
   }
   if (filterStatus.value === "Active") {
-    return props.tasks.filter((task) => !task.completed);
+    return taskStore.tasks.filter((task) => !task.completed);
   }
   if (filterStatus.value === "Completed") {
-    return props.tasks.filter((task) => task.completed);
+    return taskStore.tasks.filter((task) => task.completed);
   }
-  return props.tasks;
+  return taskStore.tasks;
 });
 
 // Method to remove a task
 const removeTask = async (taskId) => {
   try {
-    // Send DELETE request to API to remove the task
-    await fetch(
-      `https://6734c937a042ab85d11b9e03.mockapi.io/api/todos/${taskId}`,
-      {
-        method: "DELETE",
-      }
-    );
-    // Remove task from the local state after deletion
-    emit("taskRemoved", taskId);
+    await taskStore.removeTask(taskId); // Use taskStore's removeTask method
   } catch (error) {
     console.error("Error deleting task:", error);
   }
@@ -182,15 +165,7 @@ const removeTask = async (taskId) => {
 // Method to update task status
 const updateTaskStatus = async (task) => {
   try {
-    const updatedTask = { ...task, completed: task.completed };
-    await fetch(
-      `https://6734c937a042ab85d11b9e03.mockapi.io/api/todos/${task.id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedTask),
-      }
-    );
+    await taskStore.updateTaskStatus(task); // Use taskStore's updateTaskStatus method
   } catch (error) {
     console.error("Error updating task status:", error);
   }
@@ -208,32 +183,21 @@ const openEditModal = (task) => {
   editTitle.value = task.title;
   editDescription.value = task.description;
   editDate.value = task.date;
-  editTaskIndex.value = props.tasks.indexOf(task);
+  editTaskIndex.value = taskStore.tasks.indexOf(task);
   editDialog.value = true;
 };
 
 // Save edited task
-const saveEditTask = async () => {
+const updateTask = async () => {
   const updatedTask = {
-    ...props.tasks[editTaskIndex.value],
+    ...taskStore.tasks[editTaskIndex.value],
     title: editTitle.value,
     description: editDescription.value,
     date: editDate.value,
   };
 
   try {
-    // Send PUT request to update task
-    await fetch(
-      `https://6734c937a042ab85d11b9e03.mockapi.io/api/todos/${updatedTask.id}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedTask),
-      }
-    );
-
-    // Update task in local state
-    props.tasks[editTaskIndex.value] = updatedTask;
+    await taskStore.updateTask(updatedTask.id, updatedTask); // Use taskStore's updateTask method
     editDialog.value = false;
   } catch (error) {
     console.error("Error saving edited task:", error);

@@ -34,27 +34,11 @@ import DayDisplay from "./components/DayDisplay.vue";
 import CreateTask from "./components/CreateTask.vue";
 import TaskItem from "./components/TaskItem.vue";
 
-// State to store tasks
-const tasks = ref([]);
-
 const taskStore = useTaskStore();
 
 onMounted(() => {
   taskStore.fetchTasks();
 });
-
-// Fetch tasks from the API and update the state
-const fetchTasks = async () => {
-  try {
-    const response = await fetch(
-      "https://6734c937a042ab85d11b9e03.mockapi.io/api/todos"
-    );
-    const data = await response.json();
-    tasks.value = data; // Update tasks with data from API
-  } catch (error) {
-    console.error("Error fetching tasks:", error);
-  }
-};
 
 // Add a new task by sending data to the API
 const addTask = async (newTask) => {
@@ -68,7 +52,7 @@ const addTask = async (newTask) => {
 
 // Method to update tasks after deletion
 const updateTasksAfterDeletion = (taskId) => {
-  taskStore.tasks = taskStore.tasks.filter((task) => task.id !== taskId);
+  taskStore.tasks = taskStore.tasks.filter((task) => task.id !== taskId); // حذف وظیفه از لیست
 };
 </script>
 
