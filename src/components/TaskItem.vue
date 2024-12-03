@@ -37,37 +37,45 @@
             >{{ task.title }}</label
           >
         </div>
-        <!-- Dropdown Container -->
-        <div class="position-relative" @click="toggleDropdown(index)">
-          <!-- More Icon -->
-          <v-icon class="action-btn" color="primary">mdi-dots-vertical</v-icon>
-          <!-- Dropdown -->
-          <div v-if="dropdownVisible === index" class="dropdown-menu">
-            <p
-              class="dropdown-item cursor-pointer font-weight-bold"
-              :class="{
-                'text-gray': task.completed,
-                'text-danger': !task.completed,
-              }"
-            >
-              {{ task.completed ? "Complete" : "Active" }}
-            </p>
-            <div class="dropdown-divider"></div>
-            <p
-              class="dropdown-item cursor-pointer"
-              @click="openEditModal(task)"
-            >
-              <v-icon class="mr-1" color="primary">mdi-pen</v-icon>Edit
-            </p>
-            <div class="dropdown-divider"></div>
 
-            <p
-              class="dropdown-item cursor-pointer"
-              @click="removeTask(task.id)"
+        <div>
+          <!-- Dropdown Container -->
+          <div class="position-relative" @click="toggleDropdown(index)">
+            <!-- More Icon -->
+            <v-icon class="action-btn" color="primary"
+              >mdi-dots-vertical</v-icon
             >
-              <v-icon class="mr-1" color="danger">mdi-delete</v-icon>Delete
-            </p>
+
+            <!-- Dropdown Menu -->
+            <div v-if="dropdownVisible === index" class="dropdown-menu">
+              <p
+                class="dropdown-item cursor-pointer font-weight-bold"
+                :class="{
+                  'text-gray': task.completed,
+                  'text-danger': !task.completed,
+                }"
+              >
+                {{ task.completed ? "Complete" : "Active" }}
+              </p>
+              <div class="dropdown-divider"></div>
+              <p
+                class="dropdown-item cursor-pointer"
+                @click="openEditModal(task)"
+              >
+                <v-icon class="mr-1" color="primary">mdi-pen</v-icon>Edit
+              </p>
+              <div class="dropdown-divider"></div>
+              <p
+                class="dropdown-item cursor-pointer"
+                @click="removeTask(task.id)"
+              >
+                <v-icon class="mr-1" color="danger">mdi-delete</v-icon>Delete
+              </p>
+            </div>
           </div>
+
+          <!-- The body of the page or the section to handle the click outside -->
+          <div @click="closeDropdown" class="page-body"></div>
         </div>
       </div>
       <div class="d-flex justify-space-between align-center">
@@ -124,9 +132,25 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { useTaskStore } from "../stores/taskStore"; // Import taskStore
+import {
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  defineProps,
+  defineEmits,
+} from "vue";
+import { useTaskStore } from "../stores/taskStore";
 import CustomDatePicker from "./CustomDatePicker.vue";
+
+const props = defineProps({
+  tasks: {
+    type: Array,
+    required: true,
+  },
+});
+
+const emit = defineEmits(["taskRemoved"]);
 
 // Access task store
 const taskStore = useTaskStore();
@@ -139,7 +163,24 @@ const toggleDropdown = (index) => {
   dropdownVisible.value = dropdownVisible.value === index ? null : index;
 };
 
-// Computed property to filter tasks based on the filter status
+// Method to close dropdown if clicked outside
+const closeDropdown = (event) => {
+  if (
+    !event.target.closest(".dropdown-menu") &&
+    !event.target.closest(".action-btn")
+  ) {
+    dropdownVisible.value = null;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("click", closeDropdown);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeDropdown);
+});
+
 const filteredTasks = computed(() => {
   if (filterStatus.value === "All") {
     return taskStore.tasks;
@@ -153,19 +194,17 @@ const filteredTasks = computed(() => {
   return taskStore.tasks;
 });
 
-// Method to remove a task
 const removeTask = async (taskId) => {
   try {
-    await taskStore.removeTask(taskId); // Use taskStore's removeTask method
+    await taskStore.removeTask(taskId);
   } catch (error) {
     console.error("Error deleting task:", error);
   }
 };
 
-// Method to update task status
 const updateTaskStatus = async (task) => {
   try {
-    await taskStore.updateTaskStatus(task); // Use taskStore's updateTaskStatus method
+    await taskStore.updateTaskStatus(task);
   } catch (error) {
     console.error("Error updating task status:", error);
   }
@@ -197,7 +236,7 @@ const updateTask = async () => {
   };
 
   try {
-    await taskStore.updateTask(updatedTask.id, updatedTask); // Use taskStore's updateTask method
+    await taskStore.updateTask(updatedTask.id, updatedTask);
     editDialog.value = false;
   } catch (error) {
     console.error("Error saving edited task:", error);

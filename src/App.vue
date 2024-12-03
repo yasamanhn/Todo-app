@@ -27,12 +27,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps, defineEmits } from "vue";
 import { useTaskStore } from "./stores/taskStore";
 
 import DayDisplay from "./components/DayDisplay.vue";
 import CreateTask from "./components/CreateTask.vue";
 import TaskItem from "./components/TaskItem.vue";
+
+const props = defineProps({
+  tasks: {
+    type: Array,
+    required: true,
+  },
+});
+
+const emit = defineEmits(["taskRemoved"]);
 
 const taskStore = useTaskStore();
 

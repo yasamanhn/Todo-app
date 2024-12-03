@@ -50,12 +50,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
 import { useTaskStore } from "../stores/taskStore";
 
 import CustomDatePicker from "./CustomDatePicker.vue";
 
 const taskStore = useTaskStore();
+
+const emit = defineEmits(["addTaskEvent"]);
 
 const dialog = ref(false);
 const taskTitle = ref("");
@@ -78,10 +80,10 @@ const addTask = async () => {
 
   try {
     await taskStore.addTask(newTask);
-    taskTitle.value = ""; 
+    taskTitle.value = "";
     taskDescription.value = "";
     parentDate.value = "";
-    dialog.value = false; 
+    dialog.value = false;
   } catch (error) {
     console.error("Error adding task:", error);
   }
