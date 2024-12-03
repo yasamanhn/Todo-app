@@ -48,5 +48,17 @@ export const useTaskStore = defineStore("tasks", {
         console.error("Error updating task:", error);
       }
     },
+
+    async updateTaskStatus(task) {
+      try {
+        const updatedTask = await updateTask(task.id, task);
+        const taskIndex = this.tasks.findIndex((t) => t.id === task.id);
+        if (taskIndex !== -1) {
+          this.tasks[taskIndex] = updatedTask;
+        }
+      } catch (error) {
+        console.error("Error updating task status:", error);
+      }
+    },
   },
 });
