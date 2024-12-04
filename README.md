@@ -37,3 +37,6 @@ To run the project locally, follow these steps:
    ```bash
     npm run preview
 
+![Screenshot 2024-12-04 152214](https://github.com/user-attachments/assets/4908cd26-10dc-4f5b-9c76-18fe2bde33d2)
+![Screenshot 2024-12-04 152249](https://github.com/user-attachments/assets/537d831b-ef1e-49a3-8c8e-517ff81a9f30)
+![Screenshot 2024-12-04 152327](https://github.com/user-attachments/assets/afabe8dc-8243-499c-9647-029129d5efdc)
