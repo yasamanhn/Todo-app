@@ -73,7 +73,7 @@ const updateTasksAfterDeletion = (taskId) => {
 };
 </script>
 
-<style>
+<style scoped>
 .v-application {
   background: linear-gradient(
       to right top,
